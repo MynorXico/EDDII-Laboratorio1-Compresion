@@ -1,0 +1,8 @@
+C:\Users\Maynor\Documents\GitHub\EDII\EDDII-Laboratorio-Compresion\EDDII-Laboratorio1-Compresion\Compresion\Compresion\bin\Debug\Compresion.exe.config
+C:\Users\Maynor\Documents\GitHub\EDII\EDDII-Laboratorio-Compresion\EDDII-Laboratorio1-Compresion\Compresion\Compresion\bin\Debug\Compresion.exe
+C:\Users\Maynor\Documents\GitHub\EDII\EDDII-Laboratorio-Compresion\EDDII-Laboratorio1-Compresion\Compresion\Compresion\bin\Debug\Compresion.pdb
+C:\Users\Maynor\Documents\GitHub\EDII\EDDII-Laboratorio-Compresion\EDDII-Laboratorio1-Compresion\Compresion\Compresion\obj\Debug\Compresion.csprojResolveAssemblyReference.cache
+C:\Users\Maynor\Documents\GitHub\EDII\EDDII-Laboratorio-Compresion\EDDII-Laboratorio1-Compresion\Compresion\Compresion\obj\Debug\Compresion.exe
+C:\Users\Maynor\Documents\GitHub\EDII\EDDII-Laboratorio-Compresion\EDDII-Laboratorio1-Compresion\Compresion\Compresion\obj\Debug\Compresion.pdb
+C:\Users\Maynor\Documents\GitHub\EDII\EDDII-Laboratorio-Compresion\EDDII-Laboratorio1-Compresion\Compresion\Compresion\bin\Debug\Compressor.dll
+C:\Users\Maynor\Documents\GitHub\EDII\EDDII-Laboratorio-Compresion\EDDII-Laboratorio1-Compresion\Compresion\Compresion\bin\Debug\Compressor.pdb
