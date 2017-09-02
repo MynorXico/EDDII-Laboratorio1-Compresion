@@ -12,7 +12,7 @@ namespace Compresion
         static void Main(string[] args)
         {
             
-            RunLength r = new RunLength(Console.ReadLine());
+            RunLength r = new RunLength(@"C:\sdf.pdf");
             r.Compress();
         }
     }

@@ -9,6 +9,11 @@ namespace Compressor
 {
     public class RunLength : ICompressor
     {
+        struct Register{
+            public byte value;
+            public int ammount;
+        }
+
         private string path;
 
         public RunLength(string path)
@@ -18,38 +23,42 @@ namespace Compressor
 
         public void Compress()
         {
-            string[] lines = File.ReadAllLines(path);
+            byte[] arr = File.ReadAllBytes(this.path);
+            byte current = arr[0];
+            int currentCounter = 0;
 
-            List<StringBuilder> OutputLines = new List<StringBuilder>();
-
-
-            for (int i = 0; i < content.Length; i++)
+            List<Register> Registers = new List<Register>();
+            for(int i = 0; i < arr.Length; i++)
             {
-                string aux = lines[i][0].ToString();
-                for (int j = 0; j < lines[i].Length; j++)
+                if(arr[i] == current)
                 {
-                    if (lines[i][j].ToString() == aux)
+                    currentCounter++;
+                    if(i+1 == arr.Length)
                     {
-                        auxCount++;
+                        Register r = new Register();
+                        r.value = current;
+                        r.ammount = currentCounter;
+                        Registers.Add(r);
                     }
-                    else
-                    {
-                        s.Append(auxCount);
-                        s.Append(aux);
-
-                        aux = lines[i][j].ToString();
-                        auxCount = 0;
-                    }                   
                 }
-                OutputLines.Add(s);
+                else
+                {
+                    Register r = new Register();
+                    r.value = current;
+                    r.ammount = currentCounter;
+                    Registers.Add(r);
+
+                    current = arr[i];
+                    currentCounter = 1;
+                }
             }
 
-            
+            Console.ReadLine();
         }
 
         public void Decompress()
         {
-            
+           
         }
     }
 }
