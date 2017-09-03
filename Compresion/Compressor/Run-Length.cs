@@ -15,6 +15,7 @@ namespace Compressor
         }
 
         private string FilePath;
+        private string CompressedFilePath;
         private string FolderPath;
         private string FileName;
 
@@ -23,6 +24,7 @@ namespace Compressor
             this.FilePath = FilePath;
             this.FolderPath = Utilities.GetFolderPath(FilePath);
             this.FileName = Utilities.GetFileName(FilePath);
+            CompressedFilePath = string.Empty;
         }
 
         public void Compress()
@@ -57,18 +59,40 @@ namespace Compressor
                  }
             }
             byte[] outputBytes =  GetOutputBytes(Registers);
-            File.WriteAllBytes(FolderPath + FileName+".rlex", outputBytes);
             
-            
+            Utilities.WriteEncodeData(FilePath,FolderPath + FileName + ".rlex",outputBytes,getOutputAmount(Registers));
+            CompressedFilePath = FolderPath + FileName + ".rlex";
         }
-
         private byte[] GetOutputBytes(List<Register> registers)
         {
-            return File.ReadAllBytes(FilePath);
+            List<byte> allBytes = new List<byte>();
+            foreach(Register r in registers)
+            {
+                allBytes.Add(r.value);
+            }
+            return allBytes.ToArray();
         }
-
+        private int[]getOutputAmount(List<Register>registers)
+        {
+            List<int> amount = new List<int>();
+            foreach(Register r in registers)
+            {
+                amount.Add((byte)r.ammount);
+            }
+            return amount.ToArray();
+        }
         public void Decompress()
         {
+            string[] lines = File.ReadAllLines(CompressedFilePath);
+            List<string> allLines = new List<string>();
+            string extension = lines[0];
+            for(int i=1;i<lines.Length;i++)
+            {
+                allLines.Add(Utilities.DeCodeLine(lines[i]));
+            }
+            var d =new DirectoryInfo(CompressedFilePath);
+            File.Create(d.Root+"\\deCom"+d.Name+extension).Dispose();
+            File.WriteAllLines(d.Root + "\\deCom" + d.Name + extension,allLines);
            
         }
     }

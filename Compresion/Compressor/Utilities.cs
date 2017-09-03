@@ -32,5 +32,43 @@ namespace Compressor
             string tmp = FilePath.Substring(lastBackSlashPos + 1);
             return tmp.Split('.')[0];
         }
+        public static void WriteEncodeData(string realPath,string FilePath,byte[]data,int[] amount)
+        {
+            string allLines = string.Empty;
+            for(int i=0;i<amount.Length;i++)
+            {
+                byte[] s = new byte[] { data[i] };
+                string se =amount[i].ToString()+Encoding.Default.GetString(s);
+                allLines+= se;   
+            }
+            var d = new DirectoryInfo(realPath);
+            StreamWriter r = new StreamWriter(FilePath);
+            r.WriteLine(d.Extension);
+            r.Dispose();
+            File.AppendAllText(FilePath,allLines);
+
+        }
+        public static string DeCodeLine( string line)
+        {
+            string n = string.Empty;
+            string decodedLine = string.Empty;
+            for(int i=0;i<line.Length;i++)
+            {
+                string c = line[i].ToString();
+                if (int.TryParse(c, out int result))
+                {
+                    n += c;
+                }
+                else
+                {
+                    for(int j=0;j<int.Parse(n);j++)
+                    {
+                        decodedLine += c;
+                    }
+                    n = string.Empty;
+                }
+            }
+            return decodedLine;
+        }
     }
 }
