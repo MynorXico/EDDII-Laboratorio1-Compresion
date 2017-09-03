@@ -9,21 +9,25 @@ namespace Compressor
 {
     public class RunLength : ICompressor
     {
-        struct Register{
+        struct Register {
             public byte value;
             public int ammount;
         }
 
-        private string path;
+        private string FilePath;
+        private string FolderPath;
+        private string FileName;
 
-        public RunLength(string path)
+        public RunLength(string FilePath)
         {
-            this.path = path;
+            this.FilePath = FilePath;
+            this.FolderPath = Utilities.GetFolderPath(FilePath);
+            this.FileName = Utilities.GetFileName(FilePath);
         }
 
         public void Compress()
         {
-            byte[] arr = File.ReadAllBytes(this.path);
+            byte[] arr = File.ReadAllBytes(this.FilePath);
             byte current = arr[0];
             int currentCounter = 0;
 
@@ -50,10 +54,17 @@ namespace Compressor
 
                     current = arr[i];
                     currentCounter = 1;
-                }
+                 }
             }
+            byte[] outputBytes =  GetOutputBytes(Registers);
+            File.WriteAllBytes(FolderPath + FileName+".rlex", outputBytes);
+            
+            
+        }
 
-            Console.ReadLine();
+        private byte[] GetOutputBytes(List<Register> registers)
+        {
+            return File.ReadAllBytes(FilePath);
         }
 
         public void Decompress()

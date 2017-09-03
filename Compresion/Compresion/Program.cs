@@ -12,7 +12,7 @@ namespace Compresion
         static void Main(string[] args)
         {
             
-            RunLength r = new RunLength(@"C:\sdf.pdf");
+            RunLength r = new RunLength(@"C:\Users\Maynor\Documents\CompressorTests\sdf.txt");
             r.Compress();
         }
     }
