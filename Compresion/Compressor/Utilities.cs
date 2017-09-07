@@ -50,24 +50,27 @@ namespace Compressor
         }
         public static string DeCodeLine( string line)
         {
+            List<char> AllCharsPerLine = line.ToCharArray().ToList();
             string n = string.Empty;
             string decodedLine = string.Empty;
-            for(int i=0;i<line.Length;i++)
+            foreach (char ch in AllCharsPerLine)
             {
-                string c = line[i].ToString();
+                string c = ch.ToString();
                 if (int.TryParse(c, out int result))
                 {
                     n += c;
                 }
                 else
                 {
-                    for(int j=0;j<int.Parse(n);j++)
+                    for (long j = 0; j < long.Parse(n); j++)
                     {
                         decodedLine += c;
                     }
                     n = string.Empty;
                 }
             }
+            
+            
             return decodedLine;
         }
     }
