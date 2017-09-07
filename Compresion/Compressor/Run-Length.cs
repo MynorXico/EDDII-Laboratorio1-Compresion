@@ -92,16 +92,17 @@ namespace Compressor
         }
         public void Decompress()
         {
-            string[] lines = File.ReadAllLines(CompressedFilePath);
-            List<string> allLines = new List<string>();
-            string extension = lines[0];
-            for(int i=1;i<lines.Length;i++)
-            {
-                allLines.Add(Utilities.DeCodeLine(lines[i]));
-            }
-            var d =new DirectoryInfo(CompressedFilePath);
-            File.Create(d.Root+"\\deCom"+d.Name+extension).Dispose();
-            File.WriteAllLines(d.Root + "\\deCom" + d.Name + extension,allLines);
+            byte[] bytes = File.ReadAllBytes(CompressedFilePath);
+            //string[] lines = File.ReadAllLines(CompressedFilePath);
+            //List<string> allLines = new List<string>();
+            //string extension = lines[0];
+            //for(int i=1;i<lines.Length;i++)
+            //{
+            //    allLines.Add(Utilities.DeCodeLine(lines[i]));
+            //}
+            //var d =new DirectoryInfo(CompressedFilePath);
+            //File.Create(d.Root+"\\deCom"+d.Name+extension).Dispose();
+            //File.WriteAllLines(d.Root + "\\deCom" + d.Name + extension,allLines);
            
         }
     }
