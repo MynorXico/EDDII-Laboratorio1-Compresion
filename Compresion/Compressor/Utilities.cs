@@ -34,18 +34,15 @@ namespace Compressor
         }
         public static void WriteEncodeData(string realPath,string FilePath,byte[]data,int[] amount)
         {
+            List<byte> outputBytes = new List<byte>();
             string allLines = string.Empty;
             for(int i=0;i<amount.Length;i++)
             {
-                byte[] s = new byte[] { data[i] };
-                string se =amount[i].ToString()+Encoding.Default.GetString(s);
-                allLines+= se;   
+                byte s = (byte)amount[i];
+                outputBytes.Add(s);
+                outputBytes.Add(data[i]);
             }
-            var d = new DirectoryInfo(realPath);
-            StreamWriter r = new StreamWriter(FilePath);
-            r.WriteLine(d.Extension);
-            r.Dispose();
-            File.AppendAllText(FilePath,allLines);
+            File.WriteAllBytes(FilePath, outputBytes.ToArray());
 
         }
         public static string DeCodeLine( string line)

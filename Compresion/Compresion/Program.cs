@@ -10,11 +10,10 @@ namespace Compresion
     class Program
     {
         static void Main(string[] args)
-        {
-            
-            RunLength r = new RunLength(@"C:\test.txt");
+        {            
+            RunLength r = new RunLength(@"C:\Users\Maynor\Documents\CompressorTests\mamania.txt");
             r.Compress();
-            r.Decompress();
+            //r.Decompress();
         }
     }
 }

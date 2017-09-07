@@ -49,6 +49,7 @@ namespace Compressor
                 }
                 else
                 {
+
                     Register r = new Register();
                     r.value = current;
                     r.ammount = currentCounter;
@@ -56,7 +57,15 @@ namespace Compressor
 
                     current = arr[i];
                     currentCounter = 1;
-                 }
+
+                    if (i + 1 == arr.Length)
+                    {
+                        Register r2 = new Register();
+                        r2.value = current;
+                        r2.ammount = currentCounter;
+                        Registers.Add(r2);
+                    }
+                }
             }
             byte[] outputBytes =  GetOutputBytes(Registers);
             
