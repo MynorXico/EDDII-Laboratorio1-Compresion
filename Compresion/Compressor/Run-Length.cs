@@ -29,6 +29,7 @@ namespace Compressor
 
         public void Compress()
         {
+            
             byte[] arr = File.ReadAllBytes(this.FilePath);
             byte current = arr[0];
             int currentCounter = 0;
@@ -41,22 +42,36 @@ namespace Compressor
                     currentCounter++;
                     if(i+1 == arr.Length)
                     {
-                        Register r = new Register();
-                        r.value = current;
-                        r.ammount = currentCounter;
+                        Register r = new Register
+                        {
+                            value = current,
+                            ammount = currentCounter
+                        };
                         Registers.Add(r);
                     }
                 }
                 else
                 {
-                    Register r = new Register();
-                    r.value = current;
-                    r.ammount = currentCounter;
+                   
+                    Register r = new Register
+                    {
+                        value = current,
+                        ammount = currentCounter
+                    };
                     Registers.Add(r);
 
                     current = arr[i];
                     currentCounter = 1;
-                 }
+                    if (i + 1 == arr.Length)
+                    {
+                        Register c = new Register
+                        {
+                            value = current,
+                            ammount = currentCounter
+                        };
+                        Registers.Add(c);
+                    }
+                }
             }
             byte[] outputBytes =  GetOutputBytes(Registers);
             
@@ -85,15 +100,14 @@ namespace Compressor
         {
             List<string> lines = File.ReadAllLines(CompressedFilePath).ToList();
             List<string> allLines = new List<string>();
-            string extension = lines[0];
             lines.RemoveAt(0);
             for(int i=0;i<lines.Count;i++)
             {
                 allLines.Add(Utilities.DeCodeLine(lines[i]));
             }
             var d =new DirectoryInfo(CompressedFilePath);
-            File.Create(d.Root+"\\deCom"+"caca"+extension).Dispose();
-            File.WriteAllLines(d.Root + "\\deCom" + "caca" + extension,allLines);
+            File.Create(d.Root+"\\prueba.txt").Dispose();
+            File.WriteAllLines(d.Root + "\\prueba.txt",allLines);
            
         }
     }

@@ -13,7 +13,7 @@ namespace Compresion
         {
             //Huffman h = new Huffman(@"C:\test.txt");
             //h.Compress();
-            RunLength r = new RunLength(@"C:\Users\david\Desktop\t.png");
+            RunLength r = new RunLength(@"C:\test.txt");
             r.Compress();
             r.Decompress();
         }
