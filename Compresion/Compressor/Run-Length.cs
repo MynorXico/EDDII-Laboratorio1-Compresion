@@ -113,6 +113,7 @@ namespace Compressor
             int cont = 0;
             var d = new DirectoryInfo(CompressedFilePath);
             File.Create(d.Root + "\\deCom" + d.Name + ".txt").Dispose();
+            List<byte> allbytes = new List<byte>();
             for (int i=0;i<bytes.Length;i++)
             {
                 if((i+1)%2!=0)//se obtiene la posición par, que corresponden a las cantidades por letra
@@ -121,14 +122,15 @@ namespace Compressor
                 }
                 if((i+1)%2==0)//se obtienen las posiciones pares, que corresponden al valor de la letra
                 {
-                    string content = string.Empty; 
+
+                    
                     for (int j=0;j<cont;j++)
                     {
-                        content += Encoding.Default.GetString(new byte[1] { bytes[i] }); ;
+                        allbytes.Add(bytes[i]);
                     }
-                    File.AppendAllText(d.Root + "\\deCom" + d.Name + ".txt", content);
                 
                 }
+                File.WriteAllBytes(d.Root + "\\deCom" + d.Name + ".txt", allbytes.ToArray());
             }
          
 

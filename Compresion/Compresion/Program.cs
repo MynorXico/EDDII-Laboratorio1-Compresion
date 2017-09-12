@@ -11,7 +11,7 @@ namespace Compresion
     {
         static void Main(string[] args)
         {            
-            RunLength r = new RunLength(@"C:\test2.txt");
+            RunLength r = new RunLength(@"C:\px.jpg");
             r.Compress();
             r.Decompress();
         }
