@@ -130,7 +130,7 @@ namespace Compressor
                     }
                 
                 }
-                File.WriteAllBytes(d.Root + "\\deCom" + d.Name + ".txt", allbytes.ToArray());
+                File.WriteAllBytes(d.Root + "\\deCom" + this.FileName + ".txt", allbytes.ToArray());
             }
          
 
