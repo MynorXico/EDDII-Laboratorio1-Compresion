@@ -11,8 +11,7 @@ namespace Compresion
     {
         static void Main(string[] args)
         {
-            //Huffman h = new Huffman(@"C:\test.txt");
-            //h.Compress();
+           
             RunLength r = new RunLength(@"C:\test.txt");
             r.Compress();
             r.Decompress();
