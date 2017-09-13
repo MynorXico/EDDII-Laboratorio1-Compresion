@@ -19,13 +19,17 @@ namespace Compressor
         {
             return File.ReadAllBytes(path).Count();
         }
-        public static double CompressionRatio(int sizeAfterCompression, int sizeBeforeCompression)
+        public static double CompressionRatio(double sizeAfterCompression, double sizeBeforeCompression)
         {
-            return sizeAfterCompression / sizeBeforeCompression;
+            return Math.Round((sizeAfterCompression / sizeBeforeCompression), 5);
         }
-        public static double CompressionFactor(int sizeAfterCompression, int sizeBeforeCompression)
+        public static double CompressionFactor(double sizeAfterCompression, double sizeBeforeCompression)
         {
-            return sizeBeforeCompression / sizeAfterCompression;
+            return Math.Round((sizeBeforeCompression / sizeAfterCompression),5);
+        }
+        public static double SavingPercentage(double sizeAfterCompression, double sizeBeforeCompression)
+        {
+            return Math.Round((((sizeAfterCompression - sizeBeforeCompression) / sizeAfterCompression) * 100),5);
         }
         public static string GetFolderPath(string FilePath)
         {

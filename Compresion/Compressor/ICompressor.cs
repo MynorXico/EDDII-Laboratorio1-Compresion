@@ -8,7 +8,8 @@ namespace Compressor
 {
     interface ICompressor
     {
-        void Compress();
-        void Decompress();
+        bool Compress();
+        bool Decompress();
+        void ShowStatistics();
     }
 }

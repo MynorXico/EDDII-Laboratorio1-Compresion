@@ -19,6 +19,7 @@ namespace Compressor
         private string FolderPath;
         private string FileName;
         private string FileExtension;
+        private int CompressedSize;
 
         public RunLength(string FilePath)
         {
@@ -29,13 +30,22 @@ namespace Compressor
 
         }
 
-        public void Compress()
+        public bool Compress()
         {
             List<Register> Registers = GetInputRegisters();
             
             byte[] outputBytes =  GetOutputBytes(Registers);
-            
-            Utilities.WriteEncodeData(FilePath,FolderPath + FileName + FileExtension + ".rlex",outputBytes,getOutputAmount(Registers));
+            CompressedSize = outputBytes.Length;
+            try
+            {
+                Utilities.WriteEncodeData(FilePath, FolderPath + FileName + FileExtension + ".rlex", outputBytes, getOutputAmount(Registers));
+            }
+            catch
+            {
+                return false;
+            }
+            ShowStatistics();
+            return true;
         }
 
         private List<Register> GetInputRegisters()
@@ -115,7 +125,7 @@ namespace Compressor
             }
             return amount.ToArray();
         }
-        public void Decompress()
+        public bool Decompress()
         {
             byte[] bytes = new byte[1];
             try
@@ -126,7 +136,7 @@ namespace Compressor
             {
                 Console.WriteLine("Verifique que el archivo indicado exista.");
                 Console.ReadKey();
-                return;
+                return false;
             }
             int cont = 0;
             var d = new DirectoryInfo(FilePath);
@@ -148,9 +158,27 @@ namespace Compressor
             }
             string extension = Utilities.GetCompressedFileExtension(this.FilePath);
             File.WriteAllBytes(d.Root + "\\deCom" + this.FileName + extension, allbytes.ToArray());
+            return true;
+        }
 
+        public void ShowStatistics()
+        {
+            int OriginalSize = File.ReadAllBytes(FilePath).Length;
+            int CompressedSize = this.CompressedSize;
+            double CompressionRatio = Utilities.CompressionRatio(CompressedSize, OriginalSize);
+            double CompressionFactor = Utilities.CompressionFactor(CompressedSize, OriginalSize);
+            double SavingPercentage = Utilities.SavingPercentage(CompressedSize, OriginalSize);
 
+            Console.WriteLine("\nEstadísticas del Archivo Generado");
+            Console.WriteLine($"\n\t* Tamaño Original:\t{OriginalSize}");
+            Console.WriteLine($"\t* Tamaño Final:\t\t{CompressedSize}");
+            Console.WriteLine($"\t* Ratio de Compresión:\t{CompressionRatio}");
+            Console.WriteLine($"\t* Factor de Compresión:\t{CompressionFactor}");
+            Console.WriteLine($"\t* Porcentaje ahorrado:\t{SavingPercentage} %");
+            Console.ReadKey();
 
         }
+        
     }
+    
 }

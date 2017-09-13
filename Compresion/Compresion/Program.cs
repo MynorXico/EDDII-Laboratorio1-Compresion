@@ -14,12 +14,22 @@ namespace Compresion
             string method = args[0];
             string filePath = args[1].Substring(2);
             RunLength r = new RunLength(filePath);
+
             if (method == "-c")
-                r.Compress();
+                if (r.Compress())
+                    Console.WriteLine("Compreso exitosamente.");
+                else
+                    Console.WriteLine("Ocurrió un error al comprimir el archivo especificado.");
             else if (method == "-d")
-                r.Decompress();
+                if (r.Decompress())
+                    Console.WriteLine("Descompreso exitosamente.");
+                else
+                    Console.WriteLine("Ocurrió un error al descomprimir el archivo especificado.");
             else
                 Console.WriteLine("No existe el comando indicado.");
+
+            Console.WriteLine("Presione una tecla para salir...");
+            Console.ReadKey();
         }
     }
 }
