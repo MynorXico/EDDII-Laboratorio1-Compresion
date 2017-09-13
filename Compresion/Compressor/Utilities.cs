@@ -9,6 +9,12 @@ namespace Compressor
 {
     class Utilities
     {
+        public static string GetCompressedFileExtension(string FilePath) {
+            int lastBackSlashPos = FilePath.LastIndexOf('\\');
+            string tmp = FilePath.Substring(lastBackSlashPos + 1);
+            return "."+tmp.Split('.')[1];
+        }
+
         public static int GetNumberOfBytes(string path)
         {
             return File.ReadAllBytes(path).Count();
@@ -26,6 +32,14 @@ namespace Compressor
             int lastBackSlashPos = FilePath.LastIndexOf('\\');
             return FilePath.Substring(0, lastBackSlashPos + 1);
         }
+
+        internal static string GetFileExtension(string filePath)
+        {
+            var d = new DirectoryInfo(filePath);
+            return d.Extension;
+
+        }
+
         public static string GetFileName(string FilePath)
         {
             int lastBackSlashPos = FilePath.LastIndexOf('\\');

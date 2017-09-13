@@ -10,10 +10,16 @@ namespace Compresion
     class Program
     {
         static void Main(string[] args)
-        {            
-            RunLength r = new RunLength(args[0]);
-            r.Compress();
-            r.Decompress();
+        {
+            string method = args[0];
+            string filePath = args[1].Substring(2);
+            RunLength r = new RunLength(filePath);
+            if (method == "-c")
+                r.Compress();
+            else if (method == "-d")
+                r.Decompress();
+            else
+                Console.WriteLine("No existe el comando indicado.");
         }
     }
 }

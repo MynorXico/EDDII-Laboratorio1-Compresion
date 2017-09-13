@@ -18,28 +18,39 @@ namespace Compressor
         private string CompressedFilePath;
         private string FolderPath;
         private string FileName;
+        private string FileExtension;
 
         public RunLength(string FilePath)
         {
             this.FilePath = FilePath;
             this.FolderPath = Utilities.GetFolderPath(FilePath);
             this.FileName = Utilities.GetFileName(FilePath);
-            CompressedFilePath = string.Empty;
+            this.FileExtension = Utilities.GetFileExtension(FilePath);
+
         }
 
         public void Compress()
+        {
+            List<Register> Registers = GetInputRegisters();
+            
+            byte[] outputBytes =  GetOutputBytes(Registers);
+            
+            Utilities.WriteEncodeData(FilePath,FolderPath + FileName + FileExtension + ".rlex",outputBytes,getOutputAmount(Registers));
+        }
+
+        private List<Register> GetInputRegisters()
         {
             byte[] arr = File.ReadAllBytes(this.FilePath);
             byte current = arr[0];
             int currentCounter = 0;
 
             List<Register> Registers = new List<Register>();
-            for(int i = 0; i < arr.Length; i++)
+            for (int i = 0; i < arr.Length; i++)
             {
-                if(arr[i] == current)
+                if (arr[i] == current)
                 {
                     currentCounter++;
-                    if(i+1 == arr.Length)
+                    if (i + 1 == arr.Length)
                     {
                         Register r = new Register();
                         r.value = current;
@@ -53,11 +64,11 @@ namespace Compressor
                     Register r = new Register();
                     r.value = current;
                     r.ammount = currentCounter;
-                    if(r.ammount>255)
+                    if (r.ammount > 255)
                     {
                         int per = r.ammount / 255;
                         int mod = r.ammount % 255;
-                        for(int p=0;i<per;i++)
+                        for (int p = 0; i < per; i++)
                         {
                             Register perR = new Register();
                             perR.ammount = per;
@@ -84,10 +95,7 @@ namespace Compressor
                     }
                 }
             }
-            byte[] outputBytes =  GetOutputBytes(Registers);
-            
-            Utilities.WriteEncodeData(FilePath,FolderPath + FileName + ".rlex",outputBytes,getOutputAmount(Registers));
-            CompressedFilePath = FolderPath + FileName + ".rlex";
+            return Registers;
         }
         private byte[] GetOutputBytes(List<Register> registers)
         {
@@ -109,10 +117,20 @@ namespace Compressor
         }
         public void Decompress()
         {
-            byte[] bytes = File.ReadAllBytes(CompressedFilePath);
+            byte[] bytes = new byte[1];
+            try
+            {
+                bytes = File.ReadAllBytes(FilePath);
+            }
+            catch
+            {
+                Console.WriteLine("Verifique que el archivo indicado exista.");
+                Console.ReadKey();
+                return;
+            }
             int cont = 0;
-            var d = new DirectoryInfo(CompressedFilePath);
-            File.Create(d.Root + "\\deCom" + d.Name + ".txt").Dispose();
+            var d = new DirectoryInfo(FilePath);
+            //File.Create(d.Root + "\\deCom" + d.Name + ".txt").Dispose();
             List<byte> allbytes = new List<byte>();
             for (int i=0;i<bytes.Length;i++)
             {
@@ -121,18 +139,17 @@ namespace Compressor
                     cont = (int)bytes[i];
                 }
                 if((i+1)%2==0)//se obtienen las posiciones pares, que corresponden al valor de la letra
-                {
-
-                    
+                {                    
                     for (int j=0;j<cont;j++)
                     {
                         allbytes.Add(bytes[i]);
-                    }
-                
+                    }                
                 }
-                File.WriteAllBytes(d.Root + "\\deCom" + this.FileName + ".txt", allbytes.ToArray());
             }
-         
+            string extension = Utilities.GetCompressedFileExtension(this.FilePath);
+            File.WriteAllBytes(d.Root + "\\deCom" + this.FileName + extension, allbytes.ToArray());
+
+
 
         }
     }
