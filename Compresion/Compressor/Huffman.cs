@@ -110,7 +110,7 @@ namespace Compressor
             for(int i=0;i<arr.Length;i++)
             {
                 
-                sb.Append(dictionary[arr[i]].binary);
+                sb.Append( dictionary[arr[i]].binary.PadLeft(8,'0'));
             }
             string code = sb.ToString();
         }
