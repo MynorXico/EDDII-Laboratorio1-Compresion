@@ -20,7 +20,7 @@ namespace Compressor
         {
             this.FilePath = FilePath;
         }
-        List<Register> dictionary = new List<Register>();
+        Dictionary<byte,Register> dictionary = new Dictionary<byte,Register>();
         public void Compress()
         {
             byte[] arr = File.ReadAllBytes(this.FilePath);
@@ -106,7 +106,13 @@ namespace Compressor
             {
                 Transverse(m,  binaryCode,auxList[i]);
             }
-            var d = dictionary;
+            StringBuilder sb = new StringBuilder();//Mensaje en binario concatenado
+            for(int i=0;i<arr.Length;i++)
+            {
+                
+                sb.Append(dictionary[arr[i]].binary);
+            }
+            string code = sb.ToString();
         }
         private TreeNode<Register> CreateTree(TreeNode<Register> A, TreeNode<Register> B)
         {
@@ -139,10 +145,9 @@ namespace Compressor
                     aux.ammount = node.getData().ammount;
                     aux.value = node.getData().value;
                     node.SetData(aux);
-                    dictionary.Add(aux);
+                    dictionary.Add(aux.value,aux);
                    
                 }
-               
             }
             else
             {
