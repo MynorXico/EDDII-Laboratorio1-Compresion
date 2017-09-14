@@ -20,7 +20,7 @@ namespace Compressor
         {
             this.FilePath = FilePath;
         }
-
+        List<Register> dictionary = new List<Register>();
         public void Compress()
         {
             byte[] arr = File.ReadAllBytes(this.FilePath);
@@ -63,6 +63,7 @@ namespace Compressor
             Registers = Registers.OrderByDescending(x => x.value).ToList();
             int o = 0;
             var aux = Registers[0];
+            var auxList = new List<Register>();
             List<TreeNode<Register>> nodes = new List<TreeNode<Register>>();
             for (int i = 0; i < Registers.Count; i++)
             {
@@ -74,12 +75,15 @@ namespace Compressor
                 {
                     aux.ammount = o;
                     nodes.Add(new TreeNode<Register>(aux));
+                    auxList.Add(aux);
                     aux = Registers[i];
                     o = 1;
                 }
             }
             aux.ammount = o;
             nodes.Add(new TreeNode<Register>(aux));
+            auxList.Add(aux);
+
             nodes = nodes.OrderByDescending(x => x.getData().ammount).ToList();
             bool flag = false;
             while (flag == false)
@@ -97,21 +101,22 @@ namespace Compressor
                 }
             }
             TreeNode<Register> m = nodes[0];
+            string binaryCode = string.Empty;
+            for(int i=0;i<auxList.Count; i++)
+            {
+                Transverse(m,  binaryCode,auxList[i]);
+            }
+            var d = dictionary;
         }
-        public void Decompress()
-        {
-            throw new NotImplementedException();
-        }
-
-        private TreeNode<Register> CreateTree(TreeNode<Register>A, TreeNode<Register>B)
+        private TreeNode<Register> CreateTree(TreeNode<Register> A, TreeNode<Register> B)
         {
             TreeNode<Register> father = new TreeNode<Register>();
-            if(A.getData().ammount>=B.getData().ammount)
+            if (A.getData().ammount >= B.getData().ammount)
             {
                 father.SetLeft(B);
                 father.SetRight(A);
             }
-            else if(A.getData().ammount<B.getData().ammount)
+            else if (A.getData().ammount < B.getData().ammount)
             {
                 father.SetLeft(A);
                 father.SetRight(B);
@@ -120,6 +125,53 @@ namespace Compressor
             r.ammount = A.getData().ammount + B.getData().ammount;
             father.SetData(r);
             return father;
+            
         }
+        
+        private void Transverse(TreeNode<Register>node, string binaryCode,Register auxRegister)
+        {
+            if(node.GetLeft()==null&&node.GetRight()==null)
+            {
+                if(node.getData().value==auxRegister.value)
+                {
+                    Register aux = new Register();
+                    aux.binary = binaryCode;
+                    aux.ammount = node.getData().ammount;
+                    aux.value = node.getData().value;
+                    node.SetData(aux);
+                    dictionary.Add(aux);
+                   
+                }
+               
+            }
+            else
+            {
+                if (node.GetLeft() != null)
+                {
+                    string leftPath = string.Empty;
+                    leftPath = binaryCode + "0";
+                    Transverse(node.GetLeft(), leftPath, auxRegister);
+                    
+                }
+                if (node.GetRight() != null)
+                {
+                    string rightPath = string.Empty;
+                    rightPath = binaryCode+ "1";
+                    Transverse(node.GetRight(), rightPath, auxRegister);
+                  
+                }
+                if (node.GetLeft() == null||node.GetRight()==null)
+                {
+                    return;
+                }
+            }
+            
+        }
+        public void Decompress()
+        {
+            throw new NotImplementedException();
+        }
+
+    
     }
 }
