@@ -107,16 +107,18 @@ namespace Compressor
             {
                 Transverse(m,  binaryCode,auxList[i]);
             }
-            List<BitArray> sb = new List<BitArray>();//Mensaje en binario concatenado
-           
-            for(int i=0;i<arr.Length;i++)
+            BitArray b = null;
+            List<bool> bls = new List<bool>();
+            for (int i=0;i<arr.Length;i++)
             {
-                char[] s = dictionary[arr[i]].binary.PadLeft(8, '0').ToCharArray();
+                Register auxRegister = dictionary[arr[i]];
+                char[] s =auxRegister .binary.PadLeft(8, '0').ToCharArray();
                 bool[] bts = boolConverter(s);
-                BitArray b = new BitArray(bts);
-                sb.Add(b);
+                bls.AddRange(bts);
             }
-            var code = sb;
+            
+            b = new BitArray(bls.ToArray());//arreglo de bits con el mensaje
+
             
         }
         private bool[] boolConverter(char[]list)
