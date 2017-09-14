@@ -13,6 +13,7 @@ namespace Compressor
         {
             public byte value;
             public int ammount;
+            public string binary;
         }
         private string FilePath;
         public Huffman(string FilePath)
@@ -49,66 +50,75 @@ namespace Compressor
 
                     current = arr[i];
                     currentCounter = 1;
+
+                    if (i + 1 == arr.Length)
+                    {
+                        Register r2 = new Register();
+                        r2.value = current;
+                        r2.ammount = currentCounter;
+                        Registers.Add(r2);
+                    }
                 }
             }
-            int a = 0;
-            Registers = Registers.OrderBy(x => x.value).ToList();
-            int counter = 0;
-            List<int> allAmounnts = new List<int>();
-            List<string> allValues = new List<string>();
-            byte aux = Registers[0].value;
-            while (counter < Registers.Count)
+            Registers = Registers.OrderByDescending(x => x.value).ToList();
+            int o = 0;
+            var aux = Registers[0];
+            List<TreeNode<Register>> nodes = new List<TreeNode<Register>>();
+            for (int i = 0; i < Registers.Count; i++)
             {
-                if(Registers[counter].value!=aux)
+                if (Registers[i].value == aux.value)
                 {
-                    allAmounnts.Add(a);
-                    allValues.Add(Encoding.Default.GetString(new byte[] { aux}));
-                    a = 1;
-                    aux = Registers[counter].value;
+                    o++;
                 }
                 else
                 {
-                    
-                    a++;
+                    aux.ammount = o;
+                    nodes.Add(new TreeNode<Register>(aux));
+                    aux = Registers[i];
+                    o = 1;
                 }
-                counter++;
             }
-            List<TreeNode<int>> allNodes = new List<TreeNode<int>>();
-            for(int i=0;i<allValues.Count;i++)
-            {
-                TreeNode<int> node = new TreeNode<int>(allAmounnts[i]);
-                allNodes.Add(node);
-            }
+            aux.ammount = o;
+            nodes.Add(new TreeNode<Register>(aux));
+            nodes = nodes.OrderByDescending(x => x.getData().ammount).ToList();
             bool flag = false;
-            while(flag)
+            while (flag == false)
             {
-                TreeNode<int> A = allNodes[allNodes.Count-1];
-                TreeNode<int> B = allNodes[allNodes.Count - 2];
-                allNodes.Remove(A);
-                allNodes.Remove(B);
-                allNodes.Add(CreateTree(A, B));
-                if(allNodes.Count==1)
+
+                TreeNode<Register> A = nodes[nodes.Count - 1];
+                nodes.Remove(A);
+                TreeNode<Register> B = nodes[nodes.Count - 1];
+                nodes.Remove(B);
+                nodes.Add(CreateTree(A, B));
+                nodes = nodes.OrderByDescending(x => x.getData().ammount).ToList();
+                if (nodes.Count == 1)
                 {
                     flag = true;
                 }
             }
-            TreeNode<int> m = allNodes[0];
-
-            
-        
+            TreeNode<Register> m = nodes[0];
         }
-
         public void Decompress()
         {
             throw new NotImplementedException();
         }
 
-        private TreeNode<int> CreateTree(TreeNode<int>A, TreeNode<int>B)
+        private TreeNode<Register> CreateTree(TreeNode<Register>A, TreeNode<Register>B)
         {
-            TreeNode<int> father = new TreeNode<int>();
-            father.SetLeft(A);
-            father.SetRight(B);
-            father.SetData(A.getData() + B.getData());
+            TreeNode<Register> father = new TreeNode<Register>();
+            if(A.getData().ammount>=B.getData().ammount)
+            {
+                father.SetLeft(B);
+                father.SetRight(A);
+            }
+            else if(A.getData().ammount<B.getData().ammount)
+            {
+                father.SetLeft(A);
+                father.SetRight(B);
+            }
+            var r = new Register();
+            r.ammount = A.getData().ammount + B.getData().ammount;
+            father.SetData(r);
             return father;
         }
     }

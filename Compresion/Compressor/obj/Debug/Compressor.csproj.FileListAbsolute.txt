@@ -9,3 +9,9 @@ C:\Users\david\Documents\GitHub\EDDII-Laboratorio1-Compresion\Compresion\Compres
 C:\Users\david\Documents\GitHub\EDDII-Laboratorio1-Compresion\Compresion\Compressor\obj\Debug\Compressor.csproj.CoreCompileInputs.cache
 C:\Users\david\Documents\GitHub\EDDII-Laboratorio1-Compresion\Compresion\Compressor\obj\Debug\Compressor.dll
 C:\Users\david\Documents\GitHub\EDDII-Laboratorio1-Compresion\Compresion\Compressor\obj\Debug\Compressor.pdb
+C:\Users\david\Documents\GitRepos\EDDII-Laboratorio1-Compresion\Compresion\Compressor\bin\Debug\Compressor.dll
+C:\Users\david\Documents\GitRepos\EDDII-Laboratorio1-Compresion\Compresion\Compressor\bin\Debug\Compressor.pdb
+C:\Users\david\Documents\GitRepos\EDDII-Laboratorio1-Compresion\Compresion\Compressor\obj\Debug\Compressor.csprojResolveAssemblyReference.cache
+C:\Users\david\Documents\GitRepos\EDDII-Laboratorio1-Compresion\Compresion\Compressor\obj\Debug\Compressor.csproj.CoreCompileInputs.cache
+C:\Users\david\Documents\GitRepos\EDDII-Laboratorio1-Compresion\Compresion\Compressor\obj\Debug\Compressor.dll
+C:\Users\david\Documents\GitRepos\EDDII-Laboratorio1-Compresion\Compresion\Compressor\obj\Debug\Compressor.pdb

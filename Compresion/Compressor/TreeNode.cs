@@ -6,25 +6,21 @@ using System.Threading.Tasks;
 
 namespace Compressor
 {
-    public class TreeNode<T>where T:IComparable
+    public class TreeNode<T>
     {
         private TreeNode<T> Left;
         private TreeNode<T> Right;
         private T Data;
         public TreeNode()
         {
-            Left = new TreeNode<T>();
-            Right = new TreeNode<T>();
+          
         }
         public TreeNode(T data)
         {
             this.Data = data;
-            Left = new TreeNode<T>();
-            Right = new TreeNode<T>();
         }
         public void SetLeft(TreeNode<T>treeNode)
         {
-            Left = new TreeNode<T>();
             Left = treeNode;
         }
         public TreeNode<T>GetLeft()
@@ -33,7 +29,7 @@ namespace Compressor
         }
         public void SetRight(TreeNode<T>treeNode)
         {
-            Right = new TreeNode<T>();
+         
             Right = treeNode;
         }
         public TreeNode<T> GetRight()

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Compressor
 {
-    public class binaryTree<T>where T:IComparable
+    public class binaryTree<T>
     {
         
     }
