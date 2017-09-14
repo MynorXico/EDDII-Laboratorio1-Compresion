@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -106,13 +107,34 @@ namespace Compressor
             {
                 Transverse(m,  binaryCode,auxList[i]);
             }
-            StringBuilder sb = new StringBuilder();//Mensaje en binario concatenado
+            List<BitArray> sb = new List<BitArray>();//Mensaje en binario concatenado
+           
             for(int i=0;i<arr.Length;i++)
             {
-                
-                sb.Append( dictionary[arr[i]].binary.PadLeft(8,'0'));
+                char[] s = dictionary[arr[i]].binary.PadLeft(8, '0').ToCharArray();
+                bool[] bts = boolConverter(s);
+                BitArray b = new BitArray(bts);
+                sb.Add(b);
             }
-            string code = sb.ToString();
+            var code = sb;
+            
+        }
+        private bool[] boolConverter(char[]list)
+        {
+            bool[] b = new bool[list.Length];
+            for (int i = 0; i <b.Length;i++)
+            {
+                if(list[i].Equals("1"))
+                {
+                    b[i] = true;
+                }
+                else
+                {
+                    b[i]=false;
+                }
+               
+            }
+            return b;
         }
         private TreeNode<Register> CreateTree(TreeNode<Register> A, TreeNode<Register> B)
         {
