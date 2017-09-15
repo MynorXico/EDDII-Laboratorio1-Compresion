@@ -117,8 +117,11 @@ namespace Compressor
                 bool[] bts = boolConverter(s);
                 bls.AddRange(bts);
             }
+            // Adds aditional bits
+            int AditionalBitsNumber = 0;
             while(bls.Count%8 != 0){
                 bls.Add(false);
+                AditionalBitsNumber++;
             }
             b = new BitArray(bls.ToArray());//arreglo de bits con el mensaje
 
@@ -132,8 +135,15 @@ namespace Compressor
                 BitArray bitArray = new BitArray(Bool);
                 byteOutputList.Add(Utilities.ConvertToByte(bitArray));
             }
+            // Encoded Content
+            byte[] encodedContentBytes = byteOutputList.ToArray();
+            // Last Byte Indicating the number of additional bits added.
+            byte encodedAddedBits = (byte)AditionalBitsNumber;
+
+         
+            byteOutputList.Add(encodedAddedBits);
             File.WriteAllBytes(@"C:\Users\Xico Tzian\Desktop\output.txt",byteOutputList.ToArray());
-            
+
         }
         private bool[] boolConverter(char[]list)
         {
