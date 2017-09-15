@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-
+using System.Collections;
 namespace Compressor
 {
     class Utilities
@@ -72,6 +72,11 @@ namespace Compressor
             
             
             return decodedLine;
+        }
+        public static byte ConvertToByte(BitArray array){
+            byte[] bytes = new byte[1];
+            array.CopyTo(bytes, 0);
+            return bytes[0];
         }
     }
 }

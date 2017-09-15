@@ -117,9 +117,22 @@ namespace Compressor
                 bool[] bts = boolConverter(s);
                 bls.AddRange(bts);
             }
-            
+            while(bls.Count%8 != 0){
+                bls.Add(false);
+            }
             b = new BitArray(bls.ToArray());//arreglo de bits con el mensaje
 
+            // Convierte A Bytes
+            List<byte> byteOutputList = new List<byte>();
+            for(int i = 0; i < b.Length; i+=8){
+                bool[] Bool = new bool[8];
+                for(int j = i; (j-i) < 8; j++){
+                   Bool[j-i] = bls[j];
+                }
+                BitArray bitArray = new BitArray(Bool);
+                byteOutputList.Add(Utilities.ConvertToByte(bitArray));
+            }
+            File.WriteAllBytes(@"C:\Users\Xico Tzian\Desktop\output.txt",byteOutputList.ToArray());
             
         }
         private bool[] boolConverter(char[]list)
