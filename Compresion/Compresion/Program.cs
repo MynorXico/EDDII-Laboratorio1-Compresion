@@ -12,7 +12,7 @@ namespace Compresion
         static void Main(string[] args)
         {
 
-            Huffman h = new Huffman(@"C:\test.txt");
+            Huffman h = new Huffman(@"C:\Users\Xico Tzian\Desktop\test.txt");
             h.Compress();
         }
     }

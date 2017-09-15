@@ -112,7 +112,8 @@ namespace Compressor
             for (int i=0;i<arr.Length;i++)
             {
                 Register auxRegister = dictionary[arr[i]];
-                char[] s =auxRegister .binary.PadLeft(8, '0').ToCharArray();
+                dictionary.TryGetValue(arr[i], out auxRegister);
+                char[] s =auxRegister.binary.ToCharArray();
                 bool[] bts = boolConverter(s);
                 bls.AddRange(bts);
             }
@@ -126,7 +127,7 @@ namespace Compressor
             bool[] b = new bool[list.Length];
             for (int i = 0; i <b.Length;i++)
             {
-                if(list[i].Equals("1"))
+                if(list[i] == '1')
                 {
                     b[i] = true;
                 }
