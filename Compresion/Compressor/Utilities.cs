@@ -78,5 +78,13 @@ namespace Compressor
             array.CopyTo(bytes, 0);
             return bytes[0];
         }
+        public static string ConvertToBinary(int n){
+            string s = Convert.ToString(n, 2);
+            return s;
+        }
+        public static string ByteToBoolArray(byte b){
+            string s = ConvertToBinary(b).PadLeft(8,'0');
+            return s;
+        }
     }
 }

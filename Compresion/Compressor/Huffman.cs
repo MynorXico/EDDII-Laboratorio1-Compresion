@@ -10,7 +10,7 @@ namespace Compressor
 {
     public class Huffman:ICompressor
     {
-        struct Register
+        public struct Register
         {
             public byte value;
             public int ammount;
@@ -108,7 +108,18 @@ namespace Compressor
                 Transverse(m,  binaryCode,auxList[i]);
             }
             BitArray b = null;
+
+            // Listado de boolean con el mensaje final
             List<bool> bls = new List<bool>();
+
+            bool[] encodedDictionary = EncodedDictionary(dictionary); // bool[]
+            byte dictionaryLength = (byte)encodedDictionary.Length;
+            bool[] binaryDictionaryLength = 
+                boolConverter(Utilities.ByteToBoolArray(dictionaryLength).ToCharArray()); // bool[]
+
+            bls.AddRange(binaryDictionaryLength); // Length of dictionary in bits
+            bls.AddRange(encodedDictionary); // Adds the dictionary
+
             for (int i=0;i<arr.Length;i++)
             {
                 Register auxRegister = dictionary[arr[i]];
@@ -117,12 +128,15 @@ namespace Compressor
                 bool[] bts = boolConverter(s);
                 bls.AddRange(bts);
             }
-            // Adds aditional bits
-            int AditionalBitsNumber = 0;
-            while(bls.Count%8 != 0){
+            
+            int AddedBits = 0;
+            while(bls.Count % 8 != 0)
+            {
                 bls.Add(false);
-                AditionalBitsNumber++;
+                AddedBits++;
             }
+            
+
             b = new BitArray(bls.ToArray());//arreglo de bits con el mensaje
 
             // Convierte A Bytes
@@ -135,15 +149,15 @@ namespace Compressor
                 BitArray bitArray = new BitArray(Bool);
                 byteOutputList.Add(Utilities.ConvertToByte(bitArray));
             }
-            // Encoded Content
-            byte[] encodedContentBytes = byteOutputList.ToArray();
-            // Last Byte Indicating the number of additional bits added.
-            byte encodedAddedBits = (byte)AditionalBitsNumber;
+            
+            
 
-         
-            byteOutputList.Add(encodedAddedBits);
+            
+            
+            
+           
+
             File.WriteAllBytes(@"C:\Users\Xico Tzian\Desktop\output.txt",byteOutputList.ToArray());
-
         }
         private bool[] boolConverter(char[]list)
         {
@@ -225,6 +239,26 @@ namespace Compressor
             throw new NotImplementedException();
         }
 
-    
+        public bool[] EncodedDictionary(Dictionary<byte, Register> Dictionary){
+            bool[] Output = new bool[3];
+            
+            List<bool> BinaryOutput = new List<bool>();
+
+            StringBuilder BinaryString = new StringBuilder();
+
+            foreach(KeyValuePair<byte, Register> register in Dictionary){
+                Register ActualRegister = register.Value;
+                string ActualValue = Utilities.ConvertToBinary(ActualRegister.value); // 8bits
+                string ActualBinary = ActualRegister.binary; // Length can vary.
+                string binaryLength = Utilities.ConvertToBinary(ActualBinary.Length).PadLeft(8,'0'); // 8bits
+                BinaryString.Append(ActualValue);
+                BinaryString.Append(binaryLength);
+                BinaryString.Append(ActualBinary);
+            }
+            char[] s = BinaryString.ToString().ToCharArray();
+            bool[] bts = boolConverter(s);
+
+            return bts;
+        }    
     }
 }

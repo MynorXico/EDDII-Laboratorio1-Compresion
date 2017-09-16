@@ -7,12 +7,13 @@ using System.IO;
 
 namespace Compressor
 {
+    public struct Register {
+        public byte value;
+        public int ammount;
+    }
     public class RunLength : ICompressor
     {
-        struct Register {
-            public byte value;
-            public int ammount;
-        }
+        
 
         private string FilePath;
         private string CompressedFilePath;
