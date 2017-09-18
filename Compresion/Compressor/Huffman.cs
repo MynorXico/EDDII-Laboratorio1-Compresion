@@ -150,14 +150,8 @@ namespace Compressor
                 byteOutputList.Add(Utilities.ConvertToByte(bitArray));
             }
             
-            
 
-            
-            
-            
-           
-
-            File.WriteAllBytes(@"C:\Users\Xico Tzian\Desktop\output.txt",byteOutputList.ToArray());
+            File.WriteAllBytes(@"C:\output.txt",byteOutputList.ToArray());
         }
         private bool[] boolConverter(char[]list)
         {
@@ -234,9 +228,59 @@ namespace Compressor
             }
             
         }
-        public void Decompress()
+        public void HuffmanDeCompress(string ouputFilePath)
         {
-            throw new NotImplementedException();
+            byte[] compressedFileBytes = File.ReadAllBytes(ouputFilePath);
+            StringBuilder sb = new StringBuilder();
+            for(int i=0;i<compressedFileBytes.Length;i++)
+            {
+                sb.Append(Convert.ToString(compressedFileBytes[i],2).PadLeft(8,'0'));
+            }
+            int D = Convert.ToInt32(sb.ToString().Substring(0, 8),2);
+            var a = sb;
+            //int D = (compressedFileBytes[0]);//numero de bits que ocupa el diccionario
+            //List<BitArray> b = new List<BitArray>();
+            //for(int i=1;i<compressedFileBytes.Length;i++)
+            //{
+            //    b.Add(new BitArray(compressedFileBytes[i]));
+            //}
+            //List<bool> mainBoolList = new List<bool>();
+            //foreach (BitArray arrbits in b)
+            //{
+            //    List<bool> boolList = new List<bool>();
+            //    for(int i=0;i<arrbits.Count;i++)
+            //    {
+            //        boolList.Add((bool)arrbits[i]);
+            //    }
+            //    mainBoolList.AddRange(boolList);
+            //}
+
+
+
+
+            //var bits = new BitArray(compressedFileBytes);
+            //var dictionaryBits = new BitArray(D+8);
+
+
+
+            //for(int i=0;i<D+8;i++)
+            //{
+            //    dictionaryBits[i] = bits[i];
+            //}
+
+            //for(int i=0;i<dictionaryBits.Length;i++)
+            //{
+
+            //}
+            //byte[] dictionaryBytes = new Byte[dictionaryBits.Length];
+            //dictionaryBits.CopyTo(dictionaryBytes, 0);
+
+
+
+        }
+        public  void Decompress()
+        {
+           
         }
 
         public bool[] EncodedDictionary(Dictionary<byte, Register> Dictionary){
@@ -259,6 +303,8 @@ namespace Compressor
             bool[] bts = boolConverter(s);
 
             return bts;
-        }    
+        }
+
+        
     }
 }
