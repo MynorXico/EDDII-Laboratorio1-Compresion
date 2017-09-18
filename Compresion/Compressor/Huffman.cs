@@ -151,7 +151,7 @@ namespace Compressor
             }
             
 
-            File.WriteAllBytes(@"C:\output.txt",byteOutputList.ToArray());
+            File.WriteAllBytes(@"C:\Users\Maynor\Documents\output.txt", byteOutputList.ToArray());
         }
         private bool[] boolConverter(char[]list)
         {

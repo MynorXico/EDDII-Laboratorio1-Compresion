@@ -21,3 +21,9 @@ C:\Users\Xico Tzian\Source\Repos\EDDII-Laboratorio1-Compresion\Compresion\Compre
 C:\Users\Xico Tzian\Source\Repos\EDDII-Laboratorio1-Compresion\Compresion\Compressor\obj\Debug\Compressor.csproj.CoreCompileInputs.cache
 C:\Users\Xico Tzian\Source\Repos\EDDII-Laboratorio1-Compresion\Compresion\Compressor\obj\Debug\Compressor.dll
 C:\Users\Xico Tzian\Source\Repos\EDDII-Laboratorio1-Compresion\Compresion\Compressor\obj\Debug\Compressor.pdb
+C:\Users\Maynor\source\repos\EDDII-Laboratorio1-Compresion\Compresion\Compressor\bin\Debug\Compressor.dll
+C:\Users\Maynor\source\repos\EDDII-Laboratorio1-Compresion\Compresion\Compressor\bin\Debug\Compressor.pdb
+C:\Users\Maynor\source\repos\EDDII-Laboratorio1-Compresion\Compresion\Compressor\obj\Debug\Compressor.csprojResolveAssemblyReference.cache
+C:\Users\Maynor\source\repos\EDDII-Laboratorio1-Compresion\Compresion\Compressor\obj\Debug\Compressor.csproj.CoreCompileInputs.cache
+C:\Users\Maynor\source\repos\EDDII-Laboratorio1-Compresion\Compresion\Compressor\obj\Debug\Compressor.dll
+C:\Users\Maynor\source\repos\EDDII-Laboratorio1-Compresion\Compresion\Compressor\obj\Debug\Compressor.pdb

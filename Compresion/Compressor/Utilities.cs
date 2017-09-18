@@ -32,23 +32,23 @@ namespace Compressor
             string tmp = FilePath.Substring(lastBackSlashPos + 1);
             return tmp.Split('.')[0];
         }
-        public static void WriteEncodeData(string realPath,string FilePath,byte[]data,int[] amount)
+        public static void WriteEncodeData(string realPath, string FilePath, byte[] data, int[] amount)
         {
             string allLines = string.Empty;
             List<byte> bs = new List<byte>();
-            for(int i=0;i<data.Length;i++)
+            for (int i = 0; i < data.Length; i++)
             {
                 byte[] s = new byte[] { data[i] };
                 bs.Add((byte)amount[i]);
                 bs.Add((data[i]));
-                   
+
             }
             var d = new DirectoryInfo(realPath);
             File.WriteAllBytes(FilePath, bs.ToArray());
-           
+
 
         }
-        public static string DeCodeLine( string line)
+        public static string DeCodeLine(string line)
         {
             List<char> AllCharsPerLine = line.ToCharArray().ToList();
             string n = string.Empty;
@@ -69,11 +69,25 @@ namespace Compressor
                     n = string.Empty;
                 }
             }
-            
-            
+
+
             return decodedLine;
         }
-        public static byte ConvertToByte(BitArray array){
+
+        public static BitArray Reverse(BitArray array)
+        {
+            int length = array.Length;
+            int mid = (length / 2);
+            for(int i = 0; i < mid; i++)
+            {
+                bool bit = array[i];
+                array[i] = array[length - i -1];
+                array[length - i - 1] = bit;
+            }
+            return array;
+        }
+        public static byte ConvertToByte(BitArray array) {
+            array = Reverse(array);
             byte[] bytes = new byte[1];
             array.CopyTo(bytes, 0);
             return bytes[0];
