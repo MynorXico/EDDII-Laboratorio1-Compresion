@@ -234,7 +234,8 @@ namespace Compressor
             StringBuilder sb = new StringBuilder();
             for(int i=0;i<compressedFileBytes.Length;i++)
             {
-                sb.Append(Convert.ToString(compressedFileBytes[i],2).PadLeft(8,'0'));
+                sb.Append(Utilities.ByteToBoolArray(compressedFileBytes[i]));
+               
             }
             int D = Convert.ToInt32(sb.ToString().Substring(0,8),2);
             var binaryDictionary = sb.ToString(8,D);
@@ -245,14 +246,19 @@ namespace Compressor
                 if((i+1)%16==0)//se supone que tomo los el valor y la cantidad de bits que ocupa el binario de ese valor
                 {
                     string binaryValue = aux.Substring(0,8); 
-                    int binaryLength = Convert.ToInt32(aux.Substring(aux.Length/2,8),2);
-                    string binaryRepresentation = binaryDictionary.Substring(i,binaryLength);
+                    int binaryLength = Convert.ToInt32(aux.Substring(8,8),2);
+                    string binaryRepresentation = binaryDictionary.Substring(i+1,binaryLength);
                     Register r = new Register();
                     r.binary = binaryRepresentation;
-                    r.value = Convert.ToByte(binaryValue, 2);
+                    r.value = Utilities.stringToByte(binaryValue);
                     DecompressedDictionary.Add(r.value, r);
-                    i += binaryLength+1;
+                    binaryDictionary = binaryDictionary.Substring(i + binaryLength);
                     aux = string.Empty;
+                    i = 0;
+                    if(binaryDictionary==null)
+                    {
+                        break;
+                    }
                 }
                 else
                 {

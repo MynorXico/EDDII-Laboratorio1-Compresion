@@ -100,5 +100,9 @@ namespace Compressor
             string s = ConvertToBinary(b).PadLeft(8,'0');
             return s;
         }
+        public static byte stringToByte(string s)
+        {
+            return Convert.ToByte(s, 2);
+        }
     }
 }
