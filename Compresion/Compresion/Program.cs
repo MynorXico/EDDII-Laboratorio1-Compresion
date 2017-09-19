@@ -13,7 +13,7 @@ namespace Compresion
         {           
             Huffman h = new Huffman(@"C:\test.txt");
             h.Compress();
-            h.HuffmanDeCompress(@"C:\output.txt");
+            h.HuffmanDeCompress(@"C:\Users\Maynor\Documents\output.txt");
         }
     }
 }

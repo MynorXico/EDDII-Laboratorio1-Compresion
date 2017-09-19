@@ -113,7 +113,7 @@ namespace Compressor
             List<bool> bls = new List<bool>();
 
             bool[] encodedDictionary = EncodedDictionary(dictionary); // bool[]
-            byte dictionaryLength = (byte)encodedDictionary.Length;
+            byte dictionaryLength = Convert.ToByte(dictionary.Count());
             bool[] binaryDictionaryLength = 
                 boolConverter(Utilities.ByteToBoolArray(dictionaryLength).ToCharArray()); // bool[]
 
@@ -151,7 +151,7 @@ namespace Compressor
             }
             
 
-            File.WriteAllBytes(@"C:\output.txt", byteOutputList.ToArray());
+            File.WriteAllBytes(@"C:\Users\Maynor\Documents\output.txt", byteOutputList.ToArray());
         }
         private bool[] boolConverter(char[]list)
         {
@@ -232,16 +232,38 @@ namespace Compressor
         {
             byte[] compressedFileBytes = File.ReadAllBytes(ouputFilePath);
             StringBuilder sb = new StringBuilder();
-            for(int i=0;i<compressedFileBytes.Length;i++)
+            for (int i = 0; i < compressedFileBytes.Length; i++)
             {
                 sb.Append(Utilities.ByteToBoolArray(compressedFileBytes[i]));
-               
+
             }
-            int D = Convert.ToInt32(sb.ToString().Substring(0,8),2);
-            var binaryDictionary = sb.ToString(8,D);
+            int D = Convert.ToInt32(sb.ToString().Substring(0, 8), 2); // Elementos en el diccionario
+            string binaryDictionary = sb.ToString().Substring(8);
             string aux = string.Empty;
+
             Dictionary<byte, Register> DecompressedDictionary = new Dictionary<byte, Register>();
-            for(int i=0;i<binaryDictionary.Length;i++)
+            int checkedElements = 0;
+
+            while(checkedElements < D)
+            {
+                string strValue = binaryDictionary.Substring(0, 8);
+                byte value = Convert.ToByte(strValue, 2);
+
+                string strBinaryLength = binaryDictionary.Substring(8, 8);
+                int binaryLength = Convert.ToInt32(strBinaryLength, 2);
+
+                string strBinary = binaryDictionary.Substring(16, binaryLength);
+                Register r = new Register();
+                r.binary = strBinary;
+                r.value = value;
+                DecompressedDictionary.Add(r.value, r);
+
+                binaryDictionary = binaryDictionary.Substring(16 + binaryLength);
+                checkedElements++;
+            }
+            
+            /*
+             * for(int i=0;i<binaryDictionary.Length;i++)
             {
                 if((i+1)%16==0)//se supone que tomo los el valor y la cantidad de bits que ocupa el binario de ese valor
                 {
@@ -266,6 +288,7 @@ namespace Compressor
                 }
             }
             var a = sb.ToString();
+            */
             //int D = (compressedFileBytes[0]);//numero de bits que ocupa el diccionario
             //List<BitArray> b = new List<BitArray>();
             //for(int i=1;i<compressedFileBytes.Length;i++)
@@ -320,7 +343,7 @@ namespace Compressor
 
             foreach(KeyValuePair<byte, Register> register in Dictionary){
                 Register ActualRegister = register.Value;
-                string ActualValue = Utilities.ConvertToBinary(ActualRegister.value); // 8bits
+                string ActualValue = Utilities.ConvertToBinary(ActualRegister.value).PadLeft(8, '0'); // 8bits
                 string ActualBinary = ActualRegister.binary; // Length can vary.
                 string binaryLength = Utilities.ConvertToBinary(ActualBinary.Length).PadLeft(8,'0'); // 8bits
                 BinaryString.Append(ActualValue);
