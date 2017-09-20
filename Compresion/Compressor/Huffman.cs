@@ -168,7 +168,7 @@ namespace Compressor
                 byteOutputList.Add(Utilities.ConvertToByte(bitArray));
             }
             var info = new DirectoryInfo(FilePath);
-            string newFilepath = info.Name + info.Extension +".h" +".comp";
+            string newFilepath = info.Name +".h" +".comp";
             File.WriteAllBytes(newFilepath, byteOutputList.ToArray());
             Utilities.showStatistics(newFilepath,FilePath);
         }
@@ -291,7 +291,7 @@ namespace Compressor
             string pile = "";
 
             Dictionary<string, byte> BytesDictionary = new Dictionary<string, byte>();
-            foreach (KeyValuePair<byte, Register> R in dictionary)
+            foreach (KeyValuePair<byte, Register> R in DecompressedDictionary)
             {
                 BytesDictionary.Add(R.Value.binary, R.Value.value);
             }

@@ -32,6 +32,13 @@ namespace Compressor
             string tmp = FilePath.Substring(lastBackSlashPos + 1);
             return tmp.Split('.')[0];
         }
+        public static string GetFileExtension(string FilePath)
+        {
+            int lastBackSlashPos = FilePath.LastIndexOf('\\');
+            string tmp = FilePath.Substring(lastBackSlashPos + 1);
+            return tmp.Split('.')[1];
+        }
+
         public static void WriteEncodeData(string realPath, string FilePath, byte[] data, int[] amount)
         {
             string allLines = string.Empty;
@@ -43,7 +50,6 @@ namespace Compressor
                 bs.Add((data[i]));
 
             }
-            var d = new DirectoryInfo(realPath);
             File.WriteAllBytes(FilePath, bs.ToArray());
 
 
@@ -145,11 +151,13 @@ namespace Compressor
                             h = new Huffman(filePath);// solo se utiliza esta dirección para instanciar el objeto
                             h.HuffmanDeCompress(filePath);//se usa la direccion del archivo comprimido
                         }
+                        else//se debe tratar de una compresion con rle
+                        {
+                            r = new RunLength(filePath);
+                            r.Decompress();
+                        }
                     }
-                    else//se debe tratar de una compresion con rle
-                    {
-                        //agregar aqui lo de rle
-                    }
+                    
                 }
                 else
                 {
@@ -171,6 +179,18 @@ namespace Compressor
             Console.WriteLine("Compression Factor: {0}",compressionFactor);
             Console.WriteLine("Savin Percentage: {0}%",savingPercentage);
         }
-        
+
+        public static string GetCompressedFileExtension(string FilePath)
+        {
+            int lastBackSlashPos = FilePath.LastIndexOf('\\');
+            string tmp = FilePath.Substring(lastBackSlashPos + 1);
+            return "." + tmp.Split('.')[1];
+        }
+
+        public static double SavingPercentage(double sizeAfterCompression, double sizeBeforeCompression)
+        {
+            return Math.Round((((sizeAfterCompression - sizeBeforeCompression) / sizeAfterCompression) * 100), 5);
+        }
+
     }
 }
