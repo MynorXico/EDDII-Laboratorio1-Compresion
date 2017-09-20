@@ -151,8 +151,10 @@ namespace Compressor
                 bls.Add(false);
                 AddedBits++;
             }
-            
 
+            bool[] BoolAddedBits =
+                boolConverter(Utilities.ByteToBoolArray(Convert.ToByte(AddedBits)).ToCharArray());
+            bls.AddRange(BoolAddedBits);
             b = new BitArray(bls.ToArray());//arreglo de bits con el mensaje
 
             // Convierte A Bytes
@@ -254,17 +256,19 @@ namespace Compressor
 
             }
             int D = Convert.ToInt32(sb.ToString().Substring(1, 8), 2); // Elementos en el diccionario
-            if(sb.ToString()[0] == '1')
+            if (sb.ToString()[0] == '1')
             {
                 D = 256;
             }
             string binaryDictionary = sb.ToString().Substring(9);
+            string strAddedBits = binaryDictionary.Substring((binaryDictionary.Length - 8));
+            int AddedBits = Convert.ToInt32(strAddedBits, 2);
             string aux = string.Empty;
 
             Dictionary<byte, Register> DecompressedDictionary = new Dictionary<byte, Register>();
             int checkedElements = 0;
 
-            while(checkedElements < D)
+            while (checkedElements < D)
             {
                 string strValue = binaryDictionary.Substring(0, 8);
                 byte value = Convert.ToByte(strValue, 2);
@@ -281,7 +285,44 @@ namespace Compressor
                 binaryDictionary = binaryDictionary.Substring(16 + binaryLength);
                 checkedElements++;
             }
-            
+            string CompressedContent = binaryDictionary;
+
+            string pile = "";
+
+            Dictionary<string, byte> BytesDictionary = new Dictionary<string, byte>();
+            foreach (KeyValuePair<byte, Register> R in dictionary)
+            {
+                BytesDictionary.Add(R.Value.binary, R.Value.value);
+            }
+
+            StringBuilder StringOutput = new StringBuilder();
+            for (int i = 0; i < (CompressedContent.Length-AddedBits-8); i++)
+            {
+                pile = pile + CompressedContent[i];
+                if (BytesDictionary.Keys.Contains(pile))
+                {
+                    StringOutput.Append(Utilities.ByteToBoolArray(BytesDictionary[pile]));
+                    pile = "";
+                }
+            }
+            char[] CharArray = StringOutput.ToString().ToCharArray();
+            bool[] BoolArray = boolConverter(CharArray);
+            BitArray ArrrayOfBits = new BitArray(BoolArray.ToArray()); //arreglo de bits con el mensaje
+
+            List<byte> byteOutputList = new List<byte>();
+            for (int i = 0; i < BoolArray.Length; i += 8)
+            {
+                bool[] Bool = new bool[8];
+                for (int j = i; (j - i) < 8; j++)
+                {
+                    Bool[j - i] = BoolArray[j];
+                }
+                BitArray bitArray = new BitArray(Bool);
+                byteOutputList.Add(Utilities.ConvertToByte(bitArray));
+            }
+
+
+            File.WriteAllBytes(@"C:\Users\Maynor\Documents\DecompressedOutput.txt", byteOutputList.ToArray());
             /*
              * for(int i=0;i<binaryDictionary.Length;i++)
             {
