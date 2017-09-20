@@ -11,7 +11,7 @@ namespace Compresion
     {
         static void Main(string[] args)
         {           
-            Huffman h = new Huffman(@"C:\test.txt");
+            Huffman h = new Huffman(@"C:\test.mp4");
             h.Compress();
             h.HuffmanDeCompress(@"C:\Users\Maynor\Documents\output.txt");
         }

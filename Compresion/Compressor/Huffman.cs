@@ -113,9 +113,25 @@ namespace Compressor
             List<bool> bls = new List<bool>();
 
             bool[] encodedDictionary = EncodedDictionary(dictionary); // bool[]
-            byte dictionaryLength = Convert.ToByte(dictionary.Count());
+            byte dictionaryLength;
+            try{
+                dictionaryLength = Convert.ToByte(dictionary.Count());
+            }
+            catch
+            {
+                dictionaryLength = Convert.ToByte(0);
+            }
             bool[] binaryDictionaryLength = 
                 boolConverter(Utilities.ByteToBoolArray(dictionaryLength).ToCharArray()); // bool[]
+
+            if(dictionary.Count == 256)
+            {
+                bls.Add(true);
+            }
+            else
+            {
+                bls.Add(false);
+            }
 
             bls.AddRange(binaryDictionaryLength); // Length of dictionary in bits
             bls.AddRange(encodedDictionary); // Adds the dictionary
@@ -237,8 +253,12 @@ namespace Compressor
                 sb.Append(Utilities.ByteToBoolArray(compressedFileBytes[i]));
 
             }
-            int D = Convert.ToInt32(sb.ToString().Substring(0, 8), 2); // Elementos en el diccionario
-            string binaryDictionary = sb.ToString().Substring(8);
+            int D = Convert.ToInt32(sb.ToString().Substring(1, 8), 2); // Elementos en el diccionario
+            if(sb.ToString()[0] == '1')
+            {
+                D = 256;
+            }
+            string binaryDictionary = sb.ToString().Substring(9);
             string aux = string.Empty;
 
             Dictionary<byte, Register> DecompressedDictionary = new Dictionary<byte, Register>();
