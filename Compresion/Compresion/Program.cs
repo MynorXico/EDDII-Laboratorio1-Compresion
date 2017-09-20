@@ -10,10 +10,16 @@ namespace Compresion
     class Program
     {
         static void Main(string[] args)
-        {           
-            Huffman h = new Huffman(@"C:\test.mp4");
-            h.Compress();
-            h.HuffmanDeCompress(@"C:\Users\Maynor\Documents\output.txt");
+        {
+            //asi va el nombre -h -c nombre
+            //o asi -h -d nombre
+            //o asi -r -c nombre 
+            // o asi -r -d nombre
+            
+            string method = args[0];
+            string operation = args[1];
+            string path = args[2];
+            Utilities.Operation(method,operation, path);
         }
     }
 }

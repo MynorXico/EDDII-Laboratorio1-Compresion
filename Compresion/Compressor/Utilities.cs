@@ -7,7 +7,7 @@ using System.IO;
 using System.Collections;
 namespace Compressor
 {
-    class Utilities
+    public class Utilities
     {
         public static int GetNumberOfBytes(string path)
         {
@@ -104,5 +104,73 @@ namespace Compressor
         {
             return Convert.ToByte(s, 2);
         }
+        public static void Operation(string method,string operation,string filePath)
+        {
+            Huffman h = null;
+            RunLength r = null;
+            if(!File.Exists(filePath))
+            {
+                Console.WriteLine("The file doesn´t exist");
+                return;
+            }
+            else
+            {
+                if(operation=="-c")
+                {
+                    if (method == "-h")//comprime con huffman
+                    {
+                        h = new Huffman(filePath);
+                        h.Compress();
+                        
+                    }
+                    else if (method == "-r")//comprime con RLE
+                    {
+                        r = new RunLength(filePath);
+                        r.Compress();//Hay que meterle la funcion showStatistics
+                        
+                    }
+                    else
+                    {
+                        Console.WriteLine("The method is not valid");
+                        return;
+                    }
+                }
+                else if(operation=="-d")
+                {
+                    string []dCompressMode = filePath.Split('.');
+                    if(dCompressMode.Length==4)//se trata de una compresion de huffman
+                    {
+                        if(dCompressMode[2]=="h")
+                        {
+                            h = new Huffman(filePath);// solo se utiliza esta dirección para instanciar el objeto
+                            h.HuffmanDeCompress(filePath);//se usa la direccion del archivo comprimido
+                        }
+                    }
+                    else//se debe tratar de una compresion con rle
+                    {
+                        //agregar aqui lo de rle
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("The operaton must be {0} or {1}","-c","-d");
+                    return;
+                }
+            }
+           
+        }
+        public static void showStatistics(string compressedFilePath,string originalPath)
+        {
+            var d0 = new FileInfo(originalPath);
+            var d1 = new FileInfo(compressedFilePath);
+            double compressionRatio = d1.Length / d0.Length;
+            double compressionFactor = d0.Length / d1.Length;
+            double savingPercentage = ((d0.Length - d1.Length) / d0.Length) * 100;
+            Console.WriteLine("Statistics\n\n");
+            Console.WriteLine("Compression Ratio: {0}",compressionRatio);
+            Console.WriteLine("Compression Factor: {0}",compressionFactor);
+            Console.WriteLine("Savin Percentage: {0}%",savingPercentage);
+        }
+        
     }
 }

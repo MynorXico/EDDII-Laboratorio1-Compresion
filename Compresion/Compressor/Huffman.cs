@@ -167,9 +167,10 @@ namespace Compressor
                 BitArray bitArray = new BitArray(Bool);
                 byteOutputList.Add(Utilities.ConvertToByte(bitArray));
             }
-            
-
-            File.WriteAllBytes(@"C:\Users\Maynor\Documents\output.txt", byteOutputList.ToArray());
+            var info = new DirectoryInfo(FilePath);
+            string newFilepath = info.Name + info.Extension +".h" +".comp";
+            File.WriteAllBytes(newFilepath, byteOutputList.ToArray());
+            Utilities.showStatistics(newFilepath,FilePath);
         }
         private bool[] boolConverter(char[]list)
         {
@@ -246,9 +247,9 @@ namespace Compressor
             }
             
         }
-        public void HuffmanDeCompress(string ouputFilePath)
+        public void HuffmanDeCompress(string outputFilePath)
         {
-            byte[] compressedFileBytes = File.ReadAllBytes(ouputFilePath);
+            byte[] compressedFileBytes = File.ReadAllBytes(outputFilePath);
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < compressedFileBytes.Length; i++)
             {
@@ -320,75 +321,11 @@ namespace Compressor
                 BitArray bitArray = new BitArray(Bool);
                 byteOutputList.Add(Utilities.ConvertToByte(bitArray));
             }
+            string originalExtension = outputFilePath.Split('.')[1];
+            string originalName= outputFilePath.Split('.')[0];
 
-
-            File.WriteAllBytes(@"C:\Users\Maynor\Documents\DecompressedOutput.txt", byteOutputList.ToArray());
-            /*
-             * for(int i=0;i<binaryDictionary.Length;i++)
-            {
-                if((i+1)%16==0)//se supone que tomo los el valor y la cantidad de bits que ocupa el binario de ese valor
-                {
-                    string binaryValue = aux.Substring(0,8); 
-                    int binaryLength = Convert.ToInt32(aux.Substring(8,8),2);
-                    string binaryRepresentation = binaryDictionary.Substring(i+1,binaryLength);
-                    Register r = new Register();
-                    r.binary = binaryRepresentation;
-                    r.value = Utilities.stringToByte(binaryValue);
-                    DecompressedDictionary.Add(r.value, r);
-                    binaryDictionary = binaryDictionary.Substring(i + binaryLength);
-                    aux = string.Empty;
-                    i = 0;
-                    if(binaryDictionary==null)
-                    {
-                        break;
-                    }
-                }
-                else
-                {
-                    aux += binaryDictionary[i];
-                }
-            }
-            var a = sb.ToString();
-            */
-            //int D = (compressedFileBytes[0]);//numero de bits que ocupa el diccionario
-            //List<BitArray> b = new List<BitArray>();
-            //for(int i=1;i<compressedFileBytes.Length;i++)
-            //{
-            //    b.Add(new BitArray(compressedFileBytes[i]));
-            //}
-            //List<bool> mainBoolList = new List<bool>();
-            //foreach (BitArray arrbits in b)
-            //{
-            //    List<bool> boolList = new List<bool>();
-            //    for(int i=0;i<arrbits.Count;i++)
-            //    {
-            //        boolList.Add((bool)arrbits[i]);
-            //    }
-            //    mainBoolList.AddRange(boolList);
-            //}
-
-
-
-
-            //var bits = new BitArray(compressedFileBytes);
-            //var dictionaryBits = new BitArray(D+8);
-
-
-
-            //for(int i=0;i<D+8;i++)
-            //{
-            //    dictionaryBits[i] = bits[i];
-            //}
-
-            //for(int i=0;i<dictionaryBits.Length;i++)
-            //{
-
-            //}
-            //byte[] dictionaryBytes = new Byte[dictionaryBits.Length];
-            //dictionaryBits.CopyTo(dictionaryBytes, 0);
-
-
-
+            File.WriteAllBytes(originalName+"."+originalExtension, byteOutputList.ToArray());
+          
         }
         public  void Decompress()
         {

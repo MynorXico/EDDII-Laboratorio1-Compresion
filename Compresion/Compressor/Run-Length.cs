@@ -76,8 +76,8 @@ namespace Compressor
             }
             byte[] outputBytes =  GetOutputBytes(Registers);
             
-            Utilities.WriteEncodeData(FilePath,FolderPath + FileName + ".rlex",outputBytes,getOutputAmount(Registers));
-            CompressedFilePath = FolderPath + FileName + ".rlex";
+            Utilities.WriteEncodeData(FilePath,FolderPath + FileName +"rlex"+ ".comp",outputBytes,getOutputAmount(Registers));
+            CompressedFilePath = FolderPath + FileName + ".comp"+".rlex";
         }
         private byte[] GetOutputBytes(List<Register> registers)
         {
