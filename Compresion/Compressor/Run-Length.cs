@@ -157,7 +157,7 @@ namespace Compressor
                 }
             }
             string extension = Utilities.GetCompressedFileExtension(this.FilePath);
-            File.WriteAllBytes(d.Root + "\\deCom" + this.FileName + extension, allbytes.ToArray());
+            File.WriteAllBytes(this.FileName + extension, allbytes.ToArray());
             return true;
         }
 
