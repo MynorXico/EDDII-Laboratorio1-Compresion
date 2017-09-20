@@ -38,14 +38,13 @@ namespace Compressor
             CompressedSize = outputBytes.Length;
             try
             {
-                Utilities.WriteEncodeData(FilePath, FolderPath + FileName +"."+ FileExtension +".r"+ ".comp", outputBytes, getOutputAmount(Registers));
+                Utilities.WriteEncodeData(FilePath, FileName +"."+ FileExtension +".r"+ ".comp", outputBytes, getOutputAmount(Registers));
             }
             catch
             {
                 return;
             }
-            Utilities.showStatistics(FolderPath + FileName + "." + FileExtension + ".r" + ".comp",this.FilePath);
-            ShowStatistics();
+            Utilities.showStatistics(FileName + "." + FileExtension + ".r" + ".comp",this.FilePath);
             return;
         }
 
@@ -160,24 +159,7 @@ namespace Compressor
             File.WriteAllBytes(this.FileName + extension, allbytes.ToArray());
             return;
         }
-
-        public void ShowStatistics()
-        {
-            int OriginalSize = File.ReadAllBytes(FilePath).Length;
-            int CompressedSize = this.CompressedSize;
-            double CompressionRatio = Utilities.CompressionRatio(CompressedSize, OriginalSize);
-            double CompressionFactor = Utilities.CompressionFactor(CompressedSize, OriginalSize);
-            double SavingPercentage = Utilities.SavingPercentage(CompressedSize, OriginalSize);
-
-            Console.WriteLine("\nEstadísticas del Archivo Generado");
-            Console.WriteLine($"\n\t* Tamaño Original:\t{OriginalSize}");
-            Console.WriteLine($"\t* Tamaño Final:\t\t{CompressedSize}");
-            Console.WriteLine($"\t* Ratio de Compresión:\t{CompressionRatio}");
-            Console.WriteLine($"\t* Factor de Compresión:\t{CompressionFactor}");
-            Console.WriteLine($"\t* Porcentaje ahorrado:\t{SavingPercentage} %");
-            Console.ReadKey();
-
-        }
+        
         
     }
 

@@ -117,6 +117,7 @@ namespace Compressor
             if(!File.Exists(filePath))
             {
                 Console.WriteLine("The file doesn´t exist");
+                Console.ReadKey();
                 return;
             }
             else
@@ -157,7 +158,7 @@ namespace Compressor
                 if (dCompressMode[2] == "h")
                 {
                     Huffman h = new Huffman(path);// solo se utiliza esta dirección para instanciar el objeto
-                    h.HuffmanDeCompress(path);//se usa la direccion del archivo comprimido
+                    h.Decompress();
                     Console.WriteLine("Succes!");
                 }
                 else if(dCompressMode[2]=="r")//se debe tratar de una compresion con rle
@@ -190,7 +191,7 @@ namespace Compressor
             Console.WriteLine("*Final Size {0}",d1.Length);
             Console.WriteLine("*Compression Ratio: {0}",Math.Round(compressionRatio,2));
             Console.WriteLine("*Compression Factor: {0}",Math.Round(compressionFactor,2));
-            Console.WriteLine("*Savin Percentage: {0}%",Math.Round(savingPercentage,2));
+            Console.WriteLine("*Saving Percentage: {0}%",Math.Round(savingPercentage,2));
         }
 
         public static string GetCompressedFileExtension(string FilePath)

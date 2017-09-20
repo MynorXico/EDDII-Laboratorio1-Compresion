@@ -54,6 +54,7 @@ namespace Compresion
                 Console.WriteLine("The sintax of the pettion: {0} is not valid",sb.ToString());
                 return;
             }
+            Console.ReadKey();
           
           
         }

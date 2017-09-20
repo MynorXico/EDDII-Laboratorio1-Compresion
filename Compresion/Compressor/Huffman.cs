@@ -329,7 +329,7 @@ namespace Compressor
         }
         public  void Decompress()
         {
-           
+            HuffmanDeCompress(this.FilePath);
         }
 
         public bool[] EncodedDictionary(Dictionary<byte, Register> Dictionary){
