@@ -141,43 +141,56 @@ namespace Compressor
                         return;
                     }
                 }
-                else if(operation=="-d")
-                {
-                    string []dCompressMode = filePath.Split('.');
-                    if(dCompressMode.Length==4)//se trata de una compresion de huffman
-                    {
-                        if(dCompressMode[2]=="h")
-                        {
-                            h = new Huffman(filePath);// solo se utiliza esta dirección para instanciar el objeto
-                            h.HuffmanDeCompress(filePath);//se usa la direccion del archivo comprimido
-                        }
-                        else//se debe tratar de una compresion con rle
-                        {
-                            r = new RunLength(filePath);
-                            r.Decompress();
-                        }
-                    }
-                    
-                }
                 else
                 {
-                    Console.WriteLine("The operaton must be {0} or {1}","-c","-d");
+                    Console.WriteLine("The operaton must be {0} ","-c");
                     return;
                 }
             }
            
         }
+        public static void decompress(string path)
+        {
+            string[] dCompressMode = path.Split('.');
+            if (dCompressMode.Length == 4)//el path del archivo cumplia con la sintaxis correcta
+            {
+                if (dCompressMode[2] == "h")
+                {
+                    Huffman h = new Huffman(path);// solo se utiliza esta dirección para instanciar el objeto
+                    h.HuffmanDeCompress(path);//se usa la direccion del archivo comprimido
+                    Console.WriteLine("Succes!");
+                }
+                else if(dCompressMode[2]=="r")//se debe tratar de una compresion con rle
+                {
+                    RunLength r = new RunLength(path);
+                    r.Decompress();
+                    Console.WriteLine("Succes!");
+                }
+                else
+                {
+                    Console.WriteLine("The fullname of the file must have {0} or {1}",".r",".h");
+                    return;
+                }
+            }
+            else
+            {
+                Console.WriteLine("The path {0} is not valid",path);
+                return;
+            }
+        }
         public static void showStatistics(string compressedFilePath,string originalPath)
         {
             var d0 = new FileInfo(originalPath);
             var d1 = new FileInfo(compressedFilePath);
-            double compressionRatio = d1.Length / d0.Length;
-            double compressionFactor = d0.Length / d1.Length;
-            double savingPercentage = ((d0.Length - d1.Length) / d0.Length) * 100;
+            double compressionRatio =  ((double)d1.Length / (double)d0.Length);
+            double compressionFactor =  (((double)d0.Length / (double)d1.Length));
+            double savingPercentage = (((double)d0.Length - (double)d1.Length) / (double)d0.Length) * 100;
             Console.WriteLine("Statistics\n\n");
-            Console.WriteLine("Compression Ratio: {0}",compressionRatio);
-            Console.WriteLine("Compression Factor: {0}",compressionFactor);
-            Console.WriteLine("Savin Percentage: {0}%",savingPercentage);
+            Console.WriteLine("*Original Size {0}",d0.Length);
+            Console.WriteLine("*Final Size {0}",d1.Length);
+            Console.WriteLine("*Compression Ratio: {0}",Math.Round(compressionRatio,2));
+            Console.WriteLine("*Compression Factor: {0}",Math.Round(compressionFactor,2));
+            Console.WriteLine("*Savin Percentage: {0}%",Math.Round(savingPercentage,2));
         }
 
         public static string GetCompressedFileExtension(string FilePath)

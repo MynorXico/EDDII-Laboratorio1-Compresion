@@ -40,7 +40,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="binaryTree.cs" />
     <Compile Include="Huffman.cs" />
     <Compile Include="ICompressor.cs" />
     <Compile Include="Run-Length.cs" />

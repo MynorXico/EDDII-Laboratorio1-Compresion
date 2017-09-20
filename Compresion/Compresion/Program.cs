@@ -11,15 +11,51 @@ namespace Compresion
     {
         static void Main(string[] args)
         {
-            //asi va el nombre -h -c nombre
-            //o asi -h -d nombre
-            //o asi -r -c nombre 
-            // o asi -r -d nombre
-            
-            string method = args[0];
-            string operation = args[1];
-            string path = args[2];
-            Utilities.Operation(method,operation, path);
+            //SINTAXIS PARA COMPRESIÓN
+            //Método -c nombre del archivo
+            //Ejemplo h -c imagen.jpg o r -c imagen.jpg
+
+            //SINTAXIS PARA DESCOMPRESIÓN
+            //-d nombre del archivo compreso con extensión .comp
+            //Ejmplo: -d imagen.jpg.r.comp o -d imagen.jpg.h.comp
+
+            string method = string.Empty;
+            string operation = string.Empty;
+            string path = string.Empty;
+            if (args.Length==2)// se supone que solo viene el -d y el path
+            {
+                operation = args[0];
+                path = args[1];
+                if(operation=="-d")
+                {
+                    //aqui se elije el método a utilizar para descomprimir
+                    Utilities.decompress(path);
+                }
+                else
+                {
+                    Console.WriteLine("The method {0} is not valid",operation);
+                    return;
+                }
+            }
+            else if(args.Length==3)//se supone que viene el metodo, la operación y la dirección del archivo
+            {
+                method = args[0];
+                operation = args[1];
+                path = args[2];
+                Utilities.Operation(method, operation, path);
+            }
+            else
+            {
+                StringBuilder sb = new StringBuilder();
+                for(int i=0;i<args.Length;i++)
+                {
+                    sb.Append(args[i]);
+                }
+                Console.WriteLine("The sintax of the pettion: {0} is not valid",sb.ToString());
+                return;
+            }
+          
+          
         }
     }
 }

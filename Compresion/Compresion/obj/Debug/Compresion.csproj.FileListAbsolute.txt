@@ -42,3 +42,12 @@ C:\Users\Maynor\source\repos\EDDII-Laboratorio1-Compresion\Compresion\Compresion
 C:\Users\Maynor\source\repos\EDDII-Laboratorio1-Compresion\Compresion\Compresion\obj\Debug\Compresion.csproj.CoreCompileInputs.cache
 C:\Users\Maynor\source\repos\EDDII-Laboratorio1-Compresion\Compresion\Compresion\obj\Debug\Compresion.exe
 C:\Users\Maynor\source\repos\EDDII-Laboratorio1-Compresion\Compresion\Compresion\obj\Debug\Compresion.pdb
+C:\Users\david\Documents\EDDII-Laboratorio1-Compresion\Compresion\Compresion\bin\Debug\Compresion.exe.config
+C:\Users\david\Documents\EDDII-Laboratorio1-Compresion\Compresion\Compresion\bin\Debug\Compresion.exe
+C:\Users\david\Documents\EDDII-Laboratorio1-Compresion\Compresion\Compresion\bin\Debug\Compresion.pdb
+C:\Users\david\Documents\EDDII-Laboratorio1-Compresion\Compresion\Compresion\bin\Debug\Compressor.dll
+C:\Users\david\Documents\EDDII-Laboratorio1-Compresion\Compresion\Compresion\bin\Debug\Compressor.pdb
+C:\Users\david\Documents\EDDII-Laboratorio1-Compresion\Compresion\Compresion\obj\Debug\Compresion.csprojResolveAssemblyReference.cache
+C:\Users\david\Documents\EDDII-Laboratorio1-Compresion\Compresion\Compresion\obj\Debug\Compresion.csproj.CoreCompileInputs.cache
+C:\Users\david\Documents\EDDII-Laboratorio1-Compresion\Compresion\Compresion\obj\Debug\Compresion.exe
+C:\Users\david\Documents\EDDII-Laboratorio1-Compresion\Compresion\Compresion\obj\Debug\Compresion.pdb

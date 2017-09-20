@@ -16,7 +16,6 @@ namespace Compressor
         }
 
         private string FilePath;
-        private string CompressedFilePath;
         private string FolderPath;
         private string FileName;
         private string FileExtension;
@@ -39,12 +38,13 @@ namespace Compressor
             CompressedSize = outputBytes.Length;
             try
             {
-                Utilities.WriteEncodeData(FilePath, FolderPath + FileName + FileExtension + ".rlex", outputBytes, getOutputAmount(Registers));
+                Utilities.WriteEncodeData(FilePath, FolderPath + FileName +"."+ FileExtension +".r"+ ".comp", outputBytes, getOutputAmount(Registers));
             }
             catch
             {
                 return;
             }
+            Utilities.showStatistics(FolderPath + FileName + "." + FileExtension + ".r" + ".comp",this.FilePath);
             ShowStatistics();
             return;
         }
@@ -141,7 +141,6 @@ namespace Compressor
             }
             int cont = 0;
             var d = new DirectoryInfo(FilePath);
-            //File.Create(d.Root + "\\deCom" + d.Name + ".txt").Dispose();
             List<byte> allbytes = new List<byte>();
             for (int i = 0; i < bytes.Length; i++)
             {
