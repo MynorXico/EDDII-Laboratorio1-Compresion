@@ -172,6 +172,11 @@ namespace Compressor
             File.WriteAllBytes(newFilepath, byteOutputList.ToArray());
             Utilities.showStatistics(newFilepath,FilePath);
         }
+        /// <summary>
+        /// Convierte un arreglo de chars a una representació de bools (binario)
+        /// </summary>
+        /// <param name="list"></param>
+        /// <returns></returns>
         private bool[] boolConverter(char[]list)
         {
             bool[] b = new bool[list.Length];
@@ -189,6 +194,12 @@ namespace Compressor
             }
             return b;
         }
+        /// <summary>
+        /// Crea un nodo con las condiciones de huffman
+        /// </summary>
+        /// <param name="A"></param>
+        /// <param name="B"></param>
+        /// <returns></returns>
         private TreeNode<Register> CreateTree(TreeNode<Register> A, TreeNode<Register> B)
         {
             TreeNode<Register> father = new TreeNode<Register>();
@@ -208,13 +219,19 @@ namespace Compressor
             return father;
             
         }
-        
+        /// <summary>
+        /// Recorrido transversal de los nodos de huffman; crea la representación en binario de los caracteres
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="binaryCode"></param>
+        /// <param name="auxRegister"></param>
         private void Transverse(TreeNode<Register>node, string binaryCode,Register auxRegister)
         {
             if(node.GetLeft()==null&&node.GetRight()==null)
             {
                 if(node.getData().value==auxRegister.value)
                 {
+                    //Se registra la representación en binario
                     Register aux = new Register();
                     aux.binary = binaryCode;
                     aux.ammount = node.getData().ammount;
@@ -247,6 +264,10 @@ namespace Compressor
             }
             
         }
+        /// <summary>
+        /// Método encargado de descomprimir y crear el diccionario de huffman
+        /// </summary>
+        /// <param name="outputFilePath"></param>
         public void HuffmanDeCompress(string outputFilePath)
         {
             byte[] compressedFileBytes = File.ReadAllBytes(outputFilePath);
@@ -331,7 +352,11 @@ namespace Compressor
         {
             HuffmanDeCompress(this.FilePath);
         }
-
+        /// <summary>
+        /// Método encargado de crear el diccionario em base a la descompresión de bits
+        /// </summary>
+        /// <param name="Dictionary"></param>
+        /// <returns></returns>
         public bool[] EncodedDictionary(Dictionary<byte, Register> Dictionary){
             bool[] Output = new bool[3];
             
